@@ -250,7 +250,11 @@ func sqlite3_column_decltype(stmt sqlite3_stmt, index int) (string) {
         uintptr(stmt),
         uintptr(index),
     )
-    return BytePtrToString((*byte)(unsafe.Pointer(msgPtr)))
+    if msgPtr == uintptr(0) {
+        return ""
+    } else {
+        return BytePtrToString((*byte)(unsafe.Pointer(msgPtr)))
+    }
 }
 
 func sqlite3_column_type(stmt sqlite3_stmt, index int) (int) {
